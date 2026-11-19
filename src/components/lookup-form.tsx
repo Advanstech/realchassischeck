@@ -1,23 +1,67 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { ArrowRight, LoaderCircle } from 'lucide-react';
+import { ArrowRight, CheckCircle2, LoaderCircle } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Button } from '@/components/ui/button';
+import { Chip } from '@/components/ui/primitives';
 import { trackEvent } from '@/lib/analytics';
 import { ApiRequestError, createLookup, type CreateLookupInput } from '@/lib/api';
 import { VinField } from './vin-field';
 
+const COUNTRIES = ['usa', 'canada', 'europe', 'japan', 'uae', 'china', 'other'] as const;
+
+/** The signature "checking" moment: each source ticks in turn while the answer loads. */
+function CheckingSequence({ note, steps }: { readonly note: string; readonly steps: ReadonlyArray<string> }) {
+  const [done, setDone] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setDone((value) => Math.min(steps.length, value + 1)), 900);
+    return () => window.clearInterval(timer);
+  }, [steps.length]);
+
+  return (
+    <div role="status" aria-live="polite" className="rounded-md border border-hairline bg-bg-subtle p-4">
+      <p className="text-small text-text-muted">{note}</p>
+      <ul className="mt-3 flex flex-col gap-2">
+        {steps.map((step, index) => {
+          const complete = index < done;
+          const running = index === done;
+          return (
+            <li key={step} className="flex items-center gap-3 text-small font-medium">
+              {complete ? (
+                <CheckCircle2 className="size-4 shrink-0 text-success" aria-hidden="true" />
+              ) : running ? (
+                <span className="relative grid size-4 shrink-0 place-items-center" aria-hidden="true">
+                  <span className="absolute inset-0 rounded-full bg-cta/25 animate-pulse-ring" />
+                  <LoaderCircle className="size-4 animate-spin text-cta" />
+                </span>
+              ) : (
+                <span className="size-4 shrink-0 rounded-full border border-border-strong" aria-hidden="true" />
+              )}
+              <span className={complete || running ? 'text-text' : 'text-text-subtle'}>{step}</span>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
 export function LookupForm() {
+  const t = useTranslations('lookup');
   const router = useRouter();
+  const steps = t.raw('steps') as ReadonlyArray<string>;
   const [identifier, setIdentifier] = useState('');
   const [shippingFrom, setShippingFrom] = useState<CreateLookupInput['shippingFrom']>('not_sure');
   const [localError, setLocalError] = useState('');
   const [slow, setSlow] = useState(false);
   const controller = useRef<AbortController | null>(null);
+
   const lookup = useMutation({
-    mutationFn: ({ signal }: { signal: AbortSignal }) =>
-      createLookup({ identifier, shippingFrom }, signal),
+    mutationFn: ({ signal }: { signal: AbortSignal }) => createLookup({ identifier, shippingFrom }, signal),
     onSuccess: (preview) => {
       trackEvent('lookup_completed', { status: preview.status });
       router.push(`/preview/${preview.publicId}`);
@@ -32,7 +76,10 @@ export function LookupForm() {
 
   useEffect(() => {
     if (!lookup.isPending) return;
-    const timer = window.setTimeout(() => setSlow(true), 8_000);
+    const timer = window.setTimeout(() => {
+      setSlow(true);
+      controller.current?.abort();
+    }, 8_000);
     return () => window.clearTimeout(timer);
   }, [lookup.isPending, lookup.submittedAt]);
 
@@ -40,7 +87,7 @@ export function LookupForm() {
 
   function runCheck() {
     if (!identifier) {
-      setLocalError('Enter your VIN or chassis number.');
+      setLocalError(t('error'));
       return;
     }
     setLocalError('');
@@ -57,67 +104,77 @@ export function LookupForm() {
   }
 
   const error = localError || (lookup.error instanceof ApiRequestError ? lookup.error.message : '');
-  const networkError = lookup.error && !(lookup.error instanceof ApiRequestError);
+  const networkError =
+    lookup.error
+    && !(lookup.error instanceof ApiRequestError)
+    && !(lookup.error instanceof DOMException && lookup.error.name === 'AbortError');
 
   return (
-    <form onSubmit={submit} className="flex flex-col gap-5 rounded-lg border border-border bg-surface p-5 shadow-e2 sm:p-6">
-      <VinField
-        value={identifier}
-        onChange={(value) => {
-          setIdentifier(value);
-          setLocalError('');
-          lookup.reset();
-        }}
-        disabled={lookup.isPending}
-        error={error}
-      />
-      <div className="flex flex-col gap-2">
-        <label htmlFor="shipping-from" className="font-semibold text-text">
-          Where are you importing from? <span className="font-normal text-text-muted">(optional)</span>
-        </label>
-        <select
-          id="shipping-from"
-          className="w-full rounded-md border border-border-strong bg-surface px-3 text-text disabled:opacity-60"
-          value={shippingFrom}
-          onChange={(event) => setShippingFrom(event.target.value as CreateLookupInput['shippingFrom'])}
-          disabled={lookup.isPending}
-        >
-          <option value="not_sure">I’m not sure</option>
-          <option value="usa">United States</option>
-          <option value="canada">Canada</option>
-          <option value="europe">Europe</option>
-          <option value="japan">Japan</option>
-          <option value="uae">United Arab Emirates</option>
-          <option value="china">China</option>
-          <option value="other">Another country</option>
-        </select>
+    <form
+      onSubmit={submit}
+      className="relative rounded-xl border border-hairline bg-surface p-5 shadow-e4 sm:p-6"
+    >
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-h3 font-bold tracking-tight text-brand max-sm:text-base">{t('title')}</p>
+        <Chip tone="success" className="shrink-0">{t('free')}</Chip>
       </div>
-      {networkError ? (
-        <p role="alert" className="rounded-md bg-danger-bg p-3 text-small text-danger-ink">
-          We could not reach the check service. Check your connection and try again.
-        </p>
-      ) : null}
-      <button
-        type="submit"
-        className="flex min-h-12 items-center justify-center gap-2 rounded-md bg-cta px-5 font-semibold text-on-cta hover:bg-cta-hover disabled:cursor-not-allowed disabled:opacity-70"
-        disabled={lookup.isPending}
-      >
-        {lookup.isPending ? <LoaderCircle className="animate-spin" aria-hidden="true" /> : <ArrowRight aria-hidden="true" />}
-        {lookup.isPending ? 'Checking available records…' : 'Run a free check'}
-      </button>
-      {lookup.isPending ? (
-        <div className="text-center text-small text-text-muted" role="status" aria-live="polite">
-          <p>We’re decoding the vehicle and checking record counts. No payment is taken.</p>
-          {slow ? (
-            <div className="mt-3 rounded-md bg-warning-bg p-3 text-warning-ink">
-              <p>This is taking longer than expected. You can wait or start the request again.</p>
-              <button type="button" className="mt-2 min-h-11 font-semibold underline" onClick={runCheck}>
-                Try again
-              </button>
-            </div>
-          ) : null}
-        </div>
-      ) : null}
+
+      <div className="mt-5 flex flex-col gap-5">
+        <VinField
+          value={identifier}
+          onChange={(value) => {
+            setIdentifier(value);
+            setLocalError('');
+            lookup.reset();
+          }}
+          disabled={lookup.isPending}
+          error={error}
+        />
+
+        {!lookup.isPending ? (
+          <div className="flex flex-col gap-2">
+            <label htmlFor="shipping-from" className="text-small font-semibold text-text">
+              {t('shippingLabel')} <span className="font-normal text-text-subtle">{t('shippingOptional')}</span>
+            </label>
+            <select
+              id="shipping-from"
+              className="h-12 w-full rounded-md border border-border-strong bg-surface px-3 text-small text-text hover:border-brand/40 focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 disabled:opacity-60"
+              value={shippingFrom}
+              onChange={(event) => setShippingFrom(event.target.value as CreateLookupInput['shippingFrom'])}
+              disabled={lookup.isPending}
+            >
+              <option value="not_sure">{t('notSure')}</option>
+              {COUNTRIES.map((country) => (
+                <option key={country} value={country}>
+                  {t(`countries.${country}`)}
+                </option>
+              ))}
+            </select>
+          </div>
+        ) : null}
+
+        {networkError ? (
+          <p role="alert" className="rounded-md border border-danger/25 bg-danger-bg p-3 text-small text-danger-ink">
+            {t('networkError')}
+          </p>
+        ) : null}
+
+        <Button type="submit" size="lg" loading={lookup.isPending} className="w-full">
+          {lookup.isPending ? t('submitting') : t('submit')}
+          {lookup.isPending ? null : <ArrowRight className="size-5" aria-hidden="true" />}
+        </Button>
+
+        {lookup.isPending ? <CheckingSequence note={t('checkingNote')} steps={steps} /> : null}
+
+        {slow ? (
+          <div className="rounded-md border border-warning/30 bg-warning-bg p-3 text-small text-warning-ink" role="alert">
+            <p>{t('slow')}</p>
+            <button type="button" className="mt-2 min-h-11 font-semibold underline" onClick={runCheck}>
+              {t('retry')}
+            </button>
+          </div>
+        ) : null}
+      </div>
     </form>
   );
 }

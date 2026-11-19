@@ -4,40 +4,6 @@
  */
 
 export interface paths {
-    "/api/v1/healthz": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Liveness probe. Never touches a dependency. */
-        get: operations["HealthController_liveness"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v1/readyz": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Readiness probe: database and Redis with a 1s timeout each. */
-        get: operations["HealthController_ready"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/api/v1/lookups": {
         parameters: {
             query?: never;
@@ -86,6 +52,297 @@ export interface paths {
         put?: never;
         /** Register interest in a source we do not cover yet (ORG-08) */
         post: operations["LeadsController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/otp/request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Send a six-digit sign-in code to a phone number or email (ACC-03) */
+        post: operations["AuthController_requestOtp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/otp/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Exchange a code for a session; sets the access and refresh cookies */
+        post: operations["AuthController_verifyOtp"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate the refresh token; the old one is spent immediately (ACC-04) */
+        post: operations["AuthController_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign out of this device */
+        post: operations["AuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/logout-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign out of every device (ACC-04) */
+        post: operations["AuthController_logoutAll"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The signed-in account, for the header and the profile page (ACC-05) */
+        get: operations["AuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Complete or edit the buyer profile (ACC-05 onboarding) */
+        patch: operations["AuthController_updateMe"];
+        trace?: never;
+    };
+    "/api/v1/staff/auth/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Staff sign-in with email and password */
+        post: operations["StaffAuthController_login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/auth/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Rotate the staff refresh token; replay kills the family */
+        post: operations["StaffAuthController_refresh"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/auth/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign out this console device */
+        post: operations["StaffAuthController_logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/auth/logout-all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Sign out every console device */
+        post: operations["StaffAuthController_logoutAll"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/auth/me": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** The signed-in staff member, role and permissions */
+        get: operations["StaffAuthController_me"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/users": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** List staff accounts */
+        get: operations["StaffUsersController_list"];
+        put?: never;
+        /** Create a staff account with an Argon2id password */
+        post: operations["StaffUsersController_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/staff/users/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Change a staff name, role or status */
+        patch: operations["StaffUsersController_update"];
+        trace?: never;
+    };
+    "/api/v1/admin/orders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Order queue with optional search and state filter */
+        get: operations["AdminController_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/orders/{publicRef}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** One order with its payment, timeline and margin inputs */
+        get: operations["AdminController_detail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/providers": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Provider health over the last 24 hours */
+        get: operations["AdminController_providers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/admin/switches": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Feature flags as they are stored */
+        get: operations["AdminController_switches"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -176,6 +433,187 @@ export interface components {
             received: true;
             sourceWanted: string;
         };
+        OtpRequestDto: {
+            /** @enum {string} */
+            channel: "sms" | "email";
+            contact: string;
+        };
+        OtpRequestResponseDto: {
+            /** @enum {string} */
+            channel: "sms" | "email";
+            contactHint: string;
+            expiresInSeconds: number;
+            resendAfterSeconds: number;
+            attemptsAllowed: number;
+            devCode?: string;
+        };
+        OtpVerifyDto: {
+            /** @enum {string} */
+            channel: "sms" | "email";
+            contact: string;
+            code: string;
+        };
+        AuthSessionDto: {
+            user: {
+                /** Format: uuid */
+                id: string;
+                /** @enum {string} */
+                role: "BUYER";
+                /** @enum {string} */
+                level: "GUEST" | "REGISTERED" | "IMPORTER" | "BUSINESS";
+                phone: string | null;
+                email: string | null;
+                name: string | null;
+                language: string;
+                /** @enum {string|null} */
+                intent: "PERSONAL" | "IMPORTER" | "BUSINESS" | null;
+                isNew: boolean;
+            };
+            /** Format: date-time */
+            accessExpiresAt: string;
+            /** Format: date-time */
+            refreshExpiresAt: string;
+        };
+        AccountProfileDto: {
+            /** Format: uuid */
+            id: string;
+            /** @enum {string} */
+            role: "BUYER";
+            /** @enum {string} */
+            level: "GUEST" | "REGISTERED" | "IMPORTER" | "BUSINESS";
+            phone: string | null;
+            email: string | null;
+            name: string | null;
+            language: string;
+            /** @enum {string|null} */
+            intent: "PERSONAL" | "IMPORTER" | "BUSINESS" | null;
+        };
+        AccountUpdateDto: {
+            name?: string;
+            language?: string;
+            /** @enum {string} */
+            intent?: "PERSONAL" | "IMPORTER" | "BUSINESS";
+        };
+        StaffLoginDto: {
+            /** Format: email */
+            email: string;
+            password: string;
+            totp?: string;
+        };
+        StaffSessionDto: {
+            user: {
+                /** Format: uuid */
+                id: string;
+                /** Format: email */
+                email: string;
+                name: string | null;
+                /** @enum {string} */
+                role: "SUPER_ADMIN" | "OPERATIONS" | "FINANCE" | "SUPPORT";
+                /** @enum {string} */
+                status: "ACTIVE" | "SUSPENDED";
+                permissions: ("admin.read" | "orders.read" | "orders.write" | "refunds.write" | "settings.write" | "staff.manage")[];
+            };
+            /** Format: date-time */
+            accessExpiresAt: string;
+            /** Format: date-time */
+            refreshExpiresAt: string;
+        };
+        StaffUserDto: {
+            /** Format: uuid */
+            id: string;
+            /** Format: email */
+            email: string;
+            name: string | null;
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "OPERATIONS" | "FINANCE" | "SUPPORT";
+            /** @enum {string} */
+            status: "ACTIVE" | "SUSPENDED";
+            permissions: ("admin.read" | "orders.read" | "orders.write" | "refunds.write" | "settings.write" | "staff.manage")[];
+        };
+        CreateStaffDto: {
+            /** Format: email */
+            email: string;
+            name: string;
+            /** @enum {string} */
+            role: "SUPER_ADMIN" | "OPERATIONS" | "FINANCE" | "SUPPORT";
+            password: string;
+        };
+        UpdateStaffDto: {
+            name?: string;
+            /** @enum {string} */
+            role?: "SUPER_ADMIN" | "OPERATIONS" | "FINANCE" | "SUPPORT";
+            /** @enum {string} */
+            status?: "ACTIVE" | "SUSPENDED";
+        };
+        AdminOrderListDto: {
+            orders: {
+                publicRef: string;
+                vehicle: string;
+                vin: string;
+                contact: string;
+                method: string;
+                amountPesewas: number;
+                currency: string;
+                /** @enum {string} */
+                state: "paid" | "delivered" | "held" | "pending" | "refunded" | "failed";
+                ageMinutes: number;
+                issue?: string;
+                providerCostUsd: number;
+                createdAt: string;
+            }[];
+            counts: {
+                [key: string]: number;
+            };
+            total: number;
+        };
+        AdminOrderDetailDto: {
+            publicRef: string;
+            vehicle: string;
+            vin: string;
+            contact: string;
+            method: string;
+            amountPesewas: number;
+            currency: string;
+            /** @enum {string} */
+            state: "paid" | "delivered" | "held" | "pending" | "refunded" | "failed";
+            ageMinutes: number;
+            issue?: string;
+            providerCostUsd: number;
+            createdAt: string;
+            paidAt: string | null;
+            deliveredAt: string | null;
+            gateway: string | null;
+            gatewayReference: string | null;
+            paymentStatus: string | null;
+            timeline: {
+                at: string;
+                label: string;
+                detail?: string;
+                /** @enum {string} */
+                tone?: "neutral" | "ok" | "warn" | "bad";
+            }[];
+        };
+        AdminProviderListDto: {
+            providers: {
+                key: string;
+                name: string;
+                purpose: string;
+                /** @enum {string} */
+                state: "healthy" | "degraded" | "off";
+                latencyMs: number | null;
+                failures: number;
+                costUsd: number | null;
+                calls: number;
+            }[];
+            windowMinutes: number;
+        };
+        AdminSwitchListDto: {
+            switches: {
+                key: string;
+                enabled: boolean;
+                description: string | null;
+            }[];
+        };
     };
     responses: never;
     parameters: never;
@@ -185,40 +623,6 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
-    HealthController_liveness: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
-    HealthController_ready: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-        };
-    };
     LookupsController_create: {
         parameters: {
             query?: never;
@@ -311,6 +715,543 @@ export interface operations {
             };
             /** @description Lead capture is limited to five requests per hour per IP. */
             429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_requestOtp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OtpRequestDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["OtpRequestResponseDto"];
+                };
+            };
+            /** @description A code was sent less than 30 s ago, or the hourly limit is spent. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_verifyOtp: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OtpVerifyDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthSessionDto"];
+                };
+            };
+            /** @description OTP_INVALID, or OTP_LOCKED after five wrong codes. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AuthSessionDto"];
+                };
+            };
+            /** @description A spent token was replayed: every device in the family is signed out. */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The family is revoked and the cookies are cleared. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_logoutAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Every session family for the account is revoked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountProfileDto"];
+                };
+            };
+            /** @description Missing, expired or revoked session. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AuthController_updateMe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccountUpdateDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AccountProfileDto"];
+                };
+            };
+            /** @description Missing, expired or revoked session. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffAuthController_login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StaffLoginDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSessionDto"];
+                };
+            };
+            /** @description STAFF_INVALID_CREDENTIALS. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description STAFF_LOCKED: five failures lock the account for 15 minutes. */
+            429: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffAuthController_refresh: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffSessionDto"];
+                };
+            };
+            /** @description A spent token was replayed: every device is signed out. */
+            410: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffAuthController_logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description The family is revoked and the cookies are cleared. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffAuthController_logoutAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Every session family for the staff account is revoked. */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffAuthController_me: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffUserDto"];
+                };
+            };
+            /** @description Missing, expired or revoked staff session. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffUsersController_list: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffUserDto"][];
+                };
+            };
+            /** @description FORBIDDEN: the role does not allow staff management. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffUsersController_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CreateStaffDto"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffUserDto"];
+                };
+            };
+            /** @description FORBIDDEN: the role does not allow staff management. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    StaffUsersController_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UpdateStaffDto"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StaffUserDto"];
+                };
+            };
+            /** @description FORBIDDEN: the role does not allow staff management. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_list: {
+        parameters: {
+            query?: {
+                /** @description Public report id or VIN. */
+                q?: string;
+                state?: "paid" | "delivered" | "held" | "pending" | "refunded" | "failed";
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED: no staff session cookie. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description FORBIDDEN: the staff role cannot read the console. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_detail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                publicRef: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminOrderDetailDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED: no staff session cookie. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description FORBIDDEN: the staff role cannot read the console. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description ORDER_NOT_FOUND. */
+            404: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_providers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminProviderListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED: no staff session cookie. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description FORBIDDEN: the staff role cannot read the console. */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    AdminController_switches: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminSwitchListDto"];
+                };
+            };
+            /** @description UNAUTHENTICATED: no staff session cookie. */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description FORBIDDEN: the staff role cannot read the console. */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

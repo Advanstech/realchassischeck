@@ -1,10 +1,865 @@
 {
   "brand": {
     "name": "Real Chassis Check",
-    "tagline": "Know the car before you pay for it."
+    "short": "RCC",
+    "tagline": "VIN lookup · Vehicle history · Peace of mind"
+  },
+  "nav": {
+    "home": "Home",
+    "check": "Check a car",
+    "how": "How it works",
+    "pricing": "Pricing",
+    "faq": "Questions",
+    "support": "WhatsApp support",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "skip": "Skip to content",
+    "signIn": "Sign in",
+    "account": "Your account",
+    "createAccount": "Create account"
   },
   "home": {
-    "title": "Vehicle history checks for Ghana",
-    "lede": "Enter a VIN or chassis number to see the vehicle's records before you buy. You only pay when there are records to show you."
+    "eyebrow": "Vehicle history, made in Ghana",
+    "title": "Check any car before you pay.",
+    "titleLine1": "Check any car",
+    "titleLine2": "before you pay.",
+    "lede": "Enter the VIN or chassis number and see what the records say before money leaves your hand. Free to check, priced in cedis, paid by mobile money.",
+    "formTitle": "Start with a free check",
+    "trustLine": "No charge if no records are found",
+    "trustPoints": [
+      "No charge when no records are found",
+      "From GH₵149 · one report",
+      "MTN MoMo, Telecel Cash, AT Money and cards"
+    ],
+    "sample": {
+      "label": "Sample report",
+      "vehicle": "2016 Toyota Corolla LE",
+      "spec": "Sedan · 1.8 L petrol · Automatic",
+      "vin": "VIN ···· 042788",
+      "verdictLabel": "Caution",
+      "verdictTitle": "Some issues need checking",
+      "reasons": [
+        "1 accident record, minor damage in 2019",
+        "5 odometer readings, one gap of 9,400 km",
+        "2 open recalls from the maker"
+      ],
+      "footer": "Ghana import check · rule v3 · 5 Nov 2026",
+      "reportId": "RCC-7KH2-9FQ4"
+    },
+    "trustReel": {
+      "eyebrow": "Proof, not promises",
+      "title": "Trust should be easy to see.",
+      "lede": "The useful details are brought forward: what was checked, what it costs and what you keep.",
+      "items": [
+        {
+          "kicker": "Source ledger",
+          "title": "Named sources. Dated records.",
+          "body": "Checked, not checked and unavailable are spelled out before you pay."
+        },
+        {
+          "kicker": "Zero friction",
+          "title": "No account needed.",
+          "body": "A VIN is enough to start. The free preview really is free."
+        },
+        {
+          "kicker": "Local context",
+          "title": "Ghana check built in.",
+          "body": "Import guidance shows its rule version and effective date."
+        },
+        {
+          "kicker": "Your report",
+          "title": "Proof you can keep.",
+          "body": "Read on screen, save the PDF and share the verification link."
+        }
+      ]
+    },
+    "statLabel": "This is what staff see",
+    "statValue": "Every payment reconciled",
+    "statNote": "Each charge is confirmed server-to-server before a report is built."
+  },
+  "how": {
+    "eyebrow": "Three steps, one decision",
+    "title": "From a VIN to a verdict you can act on.",
+    "lede": "No forms to memorise, no account to create. The preview is honest about what we did and did not check.",
+    "steps": [
+      {
+        "kicker": "Enter the VIN",
+        "title": "Enter the 17-character VIN",
+        "body": "It is on the windscreen or the driver’s door post. Paste it with spaces or hyphens and we clean it up. If a character looks wrong we name the exact problem, not just “invalid”."
+      },
+      {
+        "kicker": "Free preview",
+        "title": "See the free preview first",
+        "body": "Decoded vehicle, record counts, sources checked and not checked. Nothing is charged and no account is created. If there are no records, you pay nothing."
+      },
+      {
+        "kicker": "Pay and read",
+        "title": "Pay once, read the whole report",
+        "body": "Approve a mobile money prompt or pay by card. The verdict, three reasons, Ghana import check, odometer history, PDF and QR proof arrive in seconds."
+      }
+    ],
+    "sceneEyebrow": "The route to a decision",
+    "stepLabel": "Step {number}",
+    "visual": {
+      "demoLabel": "Follow the VIN",
+      "vinLabel": "VIN or chassis number",
+      "vinValue": "1M8GDM9AXKP042788",
+      "checkButton": "Check free",
+      "tapHint": "One tap starts the check",
+      "previewBadge": "Free preview · GH₵0",
+      "vehicle": "2016 Toyota Corolla LE",
+      "decoded": "Vehicle decoded",
+      "sources": "Sources checked",
+      "recordCounts": "Record counts ready",
+      "coverage": "Coverage explained",
+      "noCharge": "No account. No charge.",
+      "paymentApproved": "Payment approved",
+      "amount": "GH₵149",
+      "reportReady": "Your report is ready",
+      "verdict": "Caution",
+      "reportReason": "Two items to inspect before you buy",
+      "pdf": "PDF report",
+      "qr": "QR proof",
+      "stages": [
+        "VIN captured",
+        "Preview revealed",
+        "Decision unlocked"
+      ]
+    }
+  },
+  "report": {
+    "eyebrow": "Inside the report",
+    "title": "The answer first. The evidence behind it.",
+    "lede": "One screen answers “should I buy this car?”. Everything below exists to let you check that answer yourself.",
+    "items": [
+      {
+        "title": "Traffic-light verdict",
+        "body": "Clear, Caution, High risk or Unknown, with the three reasons that produced it. Colour never carries the meaning alone."
+      },
+      {
+        "title": "Ghana import check",
+        "body": "Age, mileage and rule-set checks with the version and date printed, so you know what the advice rests on."
+      },
+      {
+        "title": "Odometer history",
+        "body": "A chart of every reading with the drop highlighted, plus a table version for screen readers and print."
+      },
+      {
+        "title": "Named sources",
+        "body": "What we checked, what returned nothing and what is not covered. A missing record never reads as a clean car."
+      },
+      {
+        "title": "PDF with QR proof",
+        "body": "Vector PDF under 500 KB, plus a public verification page that shows no personal data to whoever scans it."
+      },
+      {
+        "title": "Delivered three ways",
+        "body": "On screen, by SMS link and by email, with the report ID you can quote to support."
+      }
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Price, in cedis",
+    "title": "One price per car. No subscription.",
+    "lede": "You pay for a report you can read, keep and prove. Bundles are for buyers comparing more than one car.",
+    "note": "Prices include VAT. If no records are found, you are not charged.",
+    "badge": "Best for comparing",
+    "plans": [
+      {
+        "name": "Single report",
+        "price": "GH₵149",
+        "note": "One vehicle, one full report",
+        "features": [
+          "Verdict and three reasons",
+          "Ghana import check",
+          "PDF, QR proof and SMS link"
+        ],
+        "saving": ""
+      },
+      {
+        "name": "Three reports",
+        "price": "GH₵399",
+        "note": "For a shortlist of cars",
+        "features": [
+          "Everything in a single report",
+          "Compare three vehicles",
+          "Shares the same account credit"
+        ],
+        "saving": "Save GH₵48"
+      },
+      {
+        "name": "Five reports",
+        "price": "GH₵595",
+        "note": "For dealers, garages and families",
+        "features": [
+          "Everything in three reports",
+          "Five vehicles, never expire mid-shortlist",
+          "Priority support on WhatsApp"
+        ],
+        "saving": "Save GH₵150"
+      }
+    ],
+    "cta": "Start a free check",
+    "compare": "Carfax reports start around USD 40. Different sources; check what each one covers before you compare."
+  },
+  "faq": {
+    "eyebrow": "Straight answers",
+    "title": "Questions buyers ask before paying.",
+    "items": [
+      {
+        "q": "What happens if no records are found?",
+        "a": "You are not charged. You get the free preview with official tools to try next. A missing record does not prove a clean history, and we will not pretend that it does."
+      },
+      {
+        "q": "Where does the history come from?",
+        "a": "US records through our provider, with the source named and dated on every report. Japan, Europe and the UAE are not covered yet, and the report says so instead of staying silent."
+      },
+      {
+        "q": "Is this a government inspection?",
+        "a": "No. We check records, not the physical car. The Ghana import check shows its rule version and effective date so you can see exactly what the advice is based on."
+      },
+      {
+        "q": "How do I pay?",
+        "a": "MTN MoMo, Telecel Cash, AT Money, or a Visa or Mastercard. You approve on your own phone, and we only charge after the gateway confirms server-to-server."
+      },
+      {
+        "q": "Do I need an account?",
+        "a": "No. A phone number for delivery is enough. If you want the report again later you can save it to an account afterwards."
+      },
+      {
+        "q": "How can someone else check my report is real?",
+        "a": "Every report carries a QR code and an ID. The verification page shows the report ID, VIN, issue date and verdict, and never personal data."
+      }
+    ]
+  },
+  "closing": {
+    "eyebrow": "Before the money moves",
+    "title": "Know the car before you pay for it.",
+    "lede": "A free check takes under a minute. You only pay when there is a report worth reading.",
+    "cta": "Check my car free",
+    "secondary": "See inside a sample report"
+  },
+  "footer": {
+    "kicker": "The record behind the ride",
+    "statement": "Built for the moment before money moves.",
+    "blurb": "Vehicle history checks built for buyers in Ghana, with the Ghana import check and named sources on every report.",
+    "explore": "Explore",
+    "trust": "How we stay honest",
+    "trustPoints": [
+      "Sources checked and not checked are printed on the report",
+      "Payment is confirmed before a report is built",
+      "Every report has a public verification page"
+    ],
+    "rights": "Resbec Pro Limited · Accra, Ghana",
+    "admin": "Staff console",
+    "legalPending": "Terms, Privacy and Refund appear here before launch."
+  },
+  "preview": {
+    "back": "Check another vehicle",
+    "youChecked": "You checked",
+    "recordsTitle": "Records found",
+    "recordsNote": "Counts only. Dates and record details are inside the paid report.",
+    "confirmHint": "Check easily confused characters: 0 and O, 1 and I, 5 and S, 8 and B.",
+    "confirm": "This is the right vehicle",
+    "buyTitle": "Full vehicle history report",
+    "buyNote": "One report. No subscription.",
+    "buyCta": "Continue to secure checkout",
+    "checkoutNote": "Checkout will be enabled with the payment milestone.",
+    "includesTitle": "What the report includes",
+    "coverageTitle": "Sources checked and not checked",
+    "coverageNote": "A source marked “not covered” was not searched. We do not imply a clear history for those countries.",
+    "gsaTitle": "Before you import",
+    "priceLabel": "Price locked at",
+    "detailsUnlock": "Record details unlock after payment.",
+    "decoded": "Decoded",
+    "checkVin": "Check the VIN",
+    "originNote": "The provider’s decoded build country differs from the VIN prefix; the decoded value is shown.",
+    "labels": {
+      "built": "Built in",
+      "body": "Body",
+      "engine": "Engine",
+      "trim": "Trim"
+    },
+    "expiry": "This preview link expires on {date}. It contains vehicle information, not your contact details.",
+    "retry": "Try again",
+    "errorTitle": "We could not open this preview",
+    "expiredTitle": "This preview link has expired",
+    "errorBody": "Check your connection and try again.",
+    "freeToolsTitle": "Free official tools to try next",
+    "leadTitle": "Help us prioritise this source",
+    "leadNote": "Leave your email address or phone number if you want an update. This is optional and does not create an order.",
+    "counts": {
+      "accidents": "Accidents",
+      "theft": "Theft",
+      "title_brands": "Title brands",
+      "sales": "Sales",
+      "recalls": "Open recalls",
+      "service": "Service"
+    },
+    "coverage": {
+      "checked": "Checked",
+      "records": "{count} records found",
+      "unavailable": "Temporarily unavailable",
+      "notCovered": "Not covered"
+    },
+    "status": {
+      "records_found": {
+        "title": "We found records for this vehicle",
+        "body": "The free check found record counts. Review what the full report includes before you decide to buy."
+      },
+      "no_records": {
+        "title": "No records found in the sources checked",
+        "body": "There is nothing to buy. This does not prove the vehicle has a clean history; use the free official tools below too."
+      },
+      "europe_referral": {
+        "title": "This vehicle needs a European history source",
+        "body": "Our US check returned no records. We are confirming a European partner, so there is nothing to buy here yet."
+      },
+      "japan_not_covered": {
+        "title": "Japanese chassis checks are not covered yet",
+        "body": "We accepted the chassis number, but we do not have a Japanese records source in this phase. You will not be charged."
+      },
+      "provider_unavailable": {
+        "title": "The vehicle records source is unavailable",
+        "body": "This source has been switched off. You cannot buy a report now, and no charge has been made."
+      },
+      "provider_error": {
+        "title": "We could not complete the free check",
+        "body": "The records provider did not respond after a retry. No charge has been made. Please try again shortly."
+      }
+    },
+    "includes": [
+      "Traffic-light verdict with three reasons",
+      "Ghana import check, with rule version and date",
+      "Accident, damage and odometer history",
+      "Auction, theft and recall records",
+      "Branded PDF with QR verification",
+      "Copy by SMS and email"
+    ]
+  },
+  "lookup": {
+    "title": "Start with a free check",
+    "free": "Free",
+    "vinLabel": "VIN or chassis number",
+    "vinHint": "A VIN has 17 characters. Japanese chassis numbers look like NZE141-1234567.",
+    "vinPlaceholder": "1M8GDM9AXKP042788",
+    "confusing": "VINs never contain the letters I, O or Q. Check those characters.",
+    "shippingLabel": "Where are you importing from?",
+    "shippingOptional": "(optional)",
+    "notSure": "I’m not sure",
+    "countries": {
+      "usa": "United States",
+      "canada": "Canada",
+      "europe": "Europe",
+      "japan": "Japan",
+      "uae": "United Arab Emirates",
+      "china": "China",
+      "other": "Another country"
+    },
+    "submit": "Check free",
+    "submitting": "Checking records…",
+    "checkingNote": "No payment is taken. We are only counting what exists.",
+    "steps": [
+      "Vehicle decode",
+      "Record counts",
+      "Sources and price"
+    ],
+    "networkError": "We could not reach the check service. Check your connection and try again.",
+    "slow": "This check took too long and was stopped. No payment was taken.",
+    "retry": "Try again",
+    "error": "Enter your VIN or chassis number."
+  },
+  "admin": {
+    "console": "Staff console",
+    "search": "Search report ID, phone, email or VIN",
+    "live": "Live",
+    "statusPayments": "Payments",
+    "statusProvider": "Provider",
+    "statusQueue": "Queue",
+    "statusWebhooks": "Webhooks",
+    "nav": {
+      "overview": "Overview",
+      "orders": "Orders",
+      "transactions": "Transactions",
+      "providers": "Providers",
+      "customers": "Customers",
+      "analytics": "Analytics",
+      "settings": "Settings",
+      "audit": "Audit log",
+      "staff": "Staff"
+    },
+    "roleSuperAdmin": "Super admin",
+    "roleOperations": "Operations",
+    "roleFinance": "Finance",
+    "roleSupport": "Support",
+    "overview": {
+      "title": "Overview",
+      "note": "Thursday, 19 Nov 2026 · all times GMT",
+      "kpi": {
+        "sales": "Sales today",
+        "paid": "Paid reports",
+        "conversion": "Preview to paid",
+        "spend": "Provider spend",
+        "attention": "Needs attention"
+      },
+      "delta": {
+        "sales": "+12% vs yesterday",
+        "paid": "+4 vs yesterday",
+        "conversion": "−0.3 pt vs yesterday",
+        "spend": "Margin 61%",
+        "attention": "1 payment held"
+      },
+      "chartTitle": "Paid reports, last 14 days",
+      "chartNote": "Revenue GH₵41,200",
+      "funnelTitle": "Funnel today",
+      "attentionTitle": "Orders needing attention",
+      "attentionNote": "Oldest first",
+      "recentTitle": "Recent orders",
+      "viewAll": "View all",
+      "liveTitle": "Live activity",
+      "liveNote": "Streaming over SSE",
+      "funnel": [
+        "Visits",
+        "Valid VIN",
+        "Preview shown",
+        "Checkout",
+        "Paid",
+        "Shared"
+      ],
+      "columns": {
+        "order": "Order",
+        "issue": "Issue",
+        "age": "Age",
+        "action": "Action"
+      }
+    },
+    "orders": {
+      "title": "Orders",
+      "note": "Every order, newest first",
+      "filter": "Filter",
+      "export": "Export CSV",
+      "exportSoon": "Export lands with the admin API",
+      "search": "Search order, phone or VIN",
+      "all": "All",
+      "empty": "No orders match that filter.",
+      "count": "{count} orders",
+      "columns": {
+        "order": "Order",
+        "vehicle": "Vehicle",
+        "customer": "Customer",
+        "method": "Method",
+        "amount": "Amount",
+        "status": "Status",
+        "age": "Age",
+        "sample": "Sample data"
+      },
+      "status": {
+        "paid": "Paid",
+        "delivered": "Delivered",
+        "held": "Held",
+        "pending": "Pending",
+        "refunded": "Refunded",
+        "failed": "Failed"
+      },
+      "clear": "Clear filters",
+      "open": "Open order",
+      "searchAction": "Search"
+    },
+    "detail": {
+      "back": "All orders",
+      "timeline": "Timeline",
+      "payment": "Payment",
+      "provider": "Provider cost",
+      "actions": "Staff actions",
+      "retry": "Retry fulfilment",
+      "refund": "Refund with reason",
+      "rebuild": "Rebuild report",
+      "report": "Open report",
+      "customer": "Customer",
+      "vehicle": "Vehicle",
+      "amount": "Amount",
+      "margin": "Margin",
+      "reasonNote": "Every destructive action requires a reason and is written to the audit log.",
+      "created": "Created",
+      "providerCost": "Provider cost",
+      "gross": "Gross margin",
+      "notFound": "Order not found",
+      "notFoundBody": "No order in this build carries that report ID.",
+      "selectAction": "Choose one action",
+      "actionsReadOnly": "Your role can read this order. Retry and rebuild need Operations rights; refunds need Finance rights.",
+      "reasonLabel": "Reason (required)",
+      "reasonPlaceholder": "What happened, in one or two lines",
+      "submit": "Queue action",
+      "notWired": "Nothing was sent",
+      "notWiredBody": "The staff actions are a prototype until the admin API lands in M4. No order, payment or report was changed.",
+      "issueHeld": "No report was built and no money was captured. The order waits for a decision.",
+      "issueRefunded": "The refund is recorded against the original payment reference.",
+      "issueRetry": "The queue keeps retrying with backoff; the buyer has already paid.",
+      "phone": "Phone",
+      "notCaptured": "Not captured"
+    },
+    "providers": {
+      "title": "Providers and switches",
+      "note": "Feature switches are audited and take effect within a minute",
+      "health": "Provider health",
+      "toggles": "Switches",
+      "latency": "Latency",
+      "failures": "Failures",
+      "cost": "Cost",
+      "state": {
+        "healthy": "Healthy",
+        "degraded": "Degraded",
+        "off": "Not connected"
+      },
+      "switchesNote": "Prototype state: switches persist once the admin API lands",
+      "readOnlyNote": "Read-only for your role. Changing a switch needs the settings permission.",
+      "on": "On",
+      "off": "Off",
+      "changed": "Changed locally",
+      "notHealthy": "{count} not healthy",
+      "budget": "{ms} ms budget"
+    },
+    "units": {
+      "min": "min",
+      "gmt": "GMT",
+      "vin": "VIN",
+      "usd": "USD",
+      "ms": "ms"
+    },
+    "signOut": "Sign out",
+    "viewSite": "View site",
+    "login": {
+      "title": "Staff console",
+      "lede": "Sign in with your staff account. Every action is logged against your session.",
+      "email": "Work email",
+      "password": "Password",
+      "hint": "Locked after five failed attempts. A super admin can unlock the account.",
+      "submit": "Sign in",
+      "submitting": "Signing in…",
+      "errorInvalid": "That email or password is not right.",
+      "errorAttempts": "That email or password is not right. {count} attempts left before the account locks.",
+      "errorLocked": "Too many failed attempts. Try again in {seconds} seconds.",
+      "errorSuspended": "This account is suspended. Contact a super admin.",
+      "errorNetwork": "We could not reach the staff service. Check your connection and try again.",
+      "back": "Back to the site",
+      "note": "Staff access only. Actions are audited."
+    },
+    "sample": {
+      "label": "Sample data",
+      "note": "The API has no rows yet, so these examples are shown instead of live data."
+    },
+    "staff": {
+      "title": "Staff accounts",
+      "note": "Only a super admin can create or change staff. Role and status changes take effect on the next request.",
+      "create": "Add a staff account",
+      "name": "Name",
+      "email": "Work email",
+      "role": "Role",
+      "password": "Initial password",
+      "passwordHint": "At least 12 characters. Hand it over through the password manager, never in chat.",
+      "submit": "Create account",
+      "submitting": "Creating…",
+      "created": "Account created. Give the password to the person through the password manager.",
+      "columns": {
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "actions": "Change"
+      },
+      "status": {
+        "ACTIVE": "Active",
+        "SUSPENDED": "Suspended"
+      },
+      "you": "You",
+      "save": "Save",
+      "saving": "Saving…",
+      "saved": "Saved",
+      "empty": "No staff accounts yet.",
+      "errorTaken": "That email already has a staff account.",
+      "errorInvalid": "Check the name, email, role and password (12 characters minimum).",
+      "errorForbidden": "Your role cannot change that account.",
+      "errorNetwork": "We could not reach the staff service. Try again."
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginLede": "Enter your phone number or email and we’ll send a six-digit code. No password to remember.",
+    "registerTitle": "Create your account",
+    "registerLede": "One code creates your account and signs you in. Keep your reports and receipts in one place.",
+    "channelLabel": "Send the code by",
+    "sms": "SMS",
+    "email": "Email",
+    "phoneLabel": "Ghana mobile number",
+    "phonePlaceholder": "024 123 4567",
+    "emailLabel": "Email address",
+    "emailPlaceholder": "you@example.com",
+    "sendCode": "Send code",
+    "sending": "Sending…",
+    "codeTitle": "Enter the six-digit code",
+    "codeSentTo": "We sent a code to {contact}.",
+    "codeLabel": "Six-digit code",
+    "codePlaceholder": "000000",
+    "verify": "Verify and continue",
+    "verifying": "Verifying…",
+    "resend": "Resend code",
+    "resendIn": "Resend in {seconds}s",
+    "expiresIn": "Code expires in {minutes}m {seconds}s",
+    "changeContact": "Use a different number or email",
+    "mockCode": "Mock delivery code: {code}",
+    "mockHint": "Shown only because messaging is in mock mode.",
+    "useMockCode": "Use this code",
+    "loginSwitch": "New here? Create an account",
+    "registerSwitch": "Already have an account? Sign in",
+    "trust": [
+      "No password ever",
+      "Six-digit code, five minutes",
+      "Your contact is encrypted at rest"
+    ],
+    "attemptsRemaining": "{count} attempts remaining.",
+    "errorGeneric": "We could not complete that. Please try again."
+  },
+  "onboarding": {
+    "eyebrow": "One last step",
+    "title": "What should we call you?",
+    "lede": "Your name appears on the reports and receipts we send you. You can change it later from your account.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Ama Mensah",
+    "nameHint": "Use the name you want on the report, 2 to 80 characters.",
+    "nameError": "Enter your name using at least two characters.",
+    "languageLabel": "Preferred language",
+    "languages": {
+      "en": "English",
+      "tw": "Twi",
+      "fr": "French",
+      "ga": "Ga",
+      "ewe": "Ewe",
+      "ha": "Hausa"
+    },
+    "submit": "Save and continue",
+    "submitting": "Saving…",
+    "error": "We could not save your profile. Try again."
+  },
+  "account": {
+    "title": "Your account",
+    "greeting": "Signed in as {contact}",
+    "roleLabel": "Account type",
+    "roleBuyer": "Buyer",
+    "nameLabel": "Name",
+    "nameEmpty": "Not set yet",
+    "editProfile": "Edit profile",
+    "contactLabel": "Contact",
+    "languageLabel": "Language",
+    "reportsTitle": "Your reports",
+    "reportsEmpty": "No reports yet. Paid reports will appear here after checkout.",
+    "checkCta": "Check a car",
+    "signOut": "Sign out",
+    "signOutAll": "Sign out of all devices",
+    "signingOut": "Signing out…",
+    "securityNote": "Sessions use HttpOnly cookies. Signing out of all devices revokes every session immediately.",
+    "loadError": "We could not load your account. Sign in again to continue.",
+    "signInAgain": "Sign in again",
+    "levelLabel": "Buyer level",
+    "levelTitle": "Your buyer level",
+    "levelIncludes": "What your level includes",
+    "levels": {
+      "GUEST": "Guest buyer",
+      "REGISTERED": "Registered buyer",
+      "IMPORTER": "Importer or exporter",
+      "BUSINESS": "Garage, dealer or rental company"
+    },
+    "levelPhase": {
+      "GUEST": "No account needed",
+      "REGISTERED": "Available now",
+      "IMPORTER": "Coming in December",
+      "BUSINESS": "Coming in December"
+    },
+    "levelDescriptions": {
+      "IMPORTER": "pack pricing, the Ghana import check and priority support.",
+      "BUSINESS": "price lists, report packs and team users for your staff."
+    },
+    "capabilities": {
+      "preview": "Free preview before you pay",
+      "purchase": "Buy a report with mobile money or card",
+      "saved_reports": "Past reports saved to your account",
+      "redownload": "Re-download your report PDF any time",
+      "share_link": "Share links with a public verification page",
+      "pack_pricing": "Pack pricing for multiple checks",
+      "priority_support": "Priority support",
+      "price_lists": "Business price lists",
+      "team_users": "Team users for your organisation"
+    },
+    "businessSoonTitle": "Business accounts are on the way",
+    "businessSoon": "Importer and business classes arrive with Phase 1B in December. Your reports and details carry over automatically.",
+    "hello": "Hello, {name}",
+    "backHome": "Back to home",
+    "tabs": {
+      "reports": "Reports",
+      "garage": "Garage",
+      "credits": "Credits",
+      "label": "Account sections"
+    },
+    "reports": {
+      "title": "Your reports",
+      "lede": "Every report you buy is saved here with its verdict, PDF and share link.",
+      "emptyTitle": "No reports yet",
+      "emptyBody": "Paid reports land here with the verdict, the Ghana import check, a PDF you can keep and a share link anyone can verify.",
+      "stepsTitle": "How your first report appears",
+      "steps": {
+        "check": "Enter a VIN and read the free preview",
+        "pay": "Approve the mobile money prompt or pay by card",
+        "saved": "The report is saved here with its PDF and QR proof"
+      },
+      "checkCta": "Check a car",
+      "sampleCta": "See a sample report"
+    },
+    "preview": {
+      "eyebrow": "Arriving in December",
+      "garageTitle": "My Garage",
+      "garageBody": "Follow the cars you are comparing. Opt-in alerts tell you when new records or recalls appear, and re-checks cost less than a first report.",
+      "garagePoints": [
+        "Follow the cars you are comparing",
+        "Opt-in alerts for new records and recalls",
+        "Re-checks at a lower price"
+      ],
+      "creditsTitle": "Credits and referral",
+      "creditsBody": "A credit balance that applies itself at checkout, a referral code your friends can use, and a clear history of what came in and what was spent.",
+      "creditsPoints": [
+        "Credits apply automatically at checkout",
+        "Share your code and earn when friends check",
+        "Balance, history and expiry in plain language"
+      ],
+      "note": "Your reports and details carry over automatically."
+    },
+    "detailsTitle": "Your details",
+    "preferencesTitle": "Preferences",
+    "appearanceHint": "System follows your device setting.",
+    "languageTitle": "Language",
+    "languageNote": "More languages arrive in December. Your reports stay in the language you choose.",
+    "securityTitle": "Security and sessions",
+    "signInMethodLabel": "Sign-in method",
+    "methods": {
+      "sms": "One-time code by SMS to {contact}",
+      "email": "One-time code by email to {contact}"
+    },
+    "sessionsNote": "This session uses secure HttpOnly cookies. Signing out of all devices revokes every session immediately.",
+    "supportTitle": "Need a hand?",
+    "supportBody": "Questions about reports, payments or refunds are answered by a real person. WhatsApp support opens with launch; the buyer questions below are ready now.",
+    "supportFaq": "Questions buyers ask",
+    "supportWhatsApp": "WhatsApp support at launch",
+    "setup": {
+      "title": "Finish setting up",
+      "progress": "{done} of {total} steps done",
+      "steps": {
+        "contact": "Contact verified",
+        "intent": "How you’ll use RCC",
+        "name": "Your details"
+      },
+      "done": "done",
+      "pending": "not done yet",
+      "continue": "Continue setup",
+      "laterNote": "You can keep using RCC meanwhile."
+    }
+  },
+  "theme": {
+    "label": "Appearance",
+    "system": "System",
+    "light": "Light",
+    "dark": "Dark",
+    "hint": "System follows your device setting."
+  },
+  "errors": {
+    "title": "This page couldn't load",
+    "body": "Something went wrong on our side. Try again, and if it keeps failing message support and we will look into it.",
+    "retry": "Try again",
+    "home": "Back to the site"
+  },
+  "pwa": {
+    "updateTitle": "A new version is ready",
+    "updateBody": "Refresh to use the latest Real Chassis Check.",
+    "refresh": "Refresh now",
+    "offline": "You’re offline. A live check needs a connection."
+  },
+  "offline": {
+    "eyebrow": "No connection",
+    "title": "You’re offline.",
+    "body": "A live VIN check needs a connection. Reconnect, then try again. Pages you already opened may still be available.",
+    "retry": "Try again"
+  },
+  "wizard": {
+    "eyebrow": "Account setup",
+    "savedNote": "Progress is saved as you go — finish later from your account.",
+    "stepOf": "Step {current} of {total}",
+    "allDone": "Setup complete",
+    "back": "Back",
+    "steps": {
+      "verify": "Verify",
+      "intent": "How you’ll use RCC",
+      "profile": "Your details"
+    },
+    "verify": {
+      "title": "Let’s get you set up",
+      "lede": "One code to your phone or email. No password to remember, and checking a car never requires an account."
+    },
+    "intent": {
+      "title": "How will you use Real Chassis Check?",
+      "lede": "This shapes the checks and pricing we show you. You can change it later.",
+      "options": {
+        "PERSONAL": {
+          "title": "I’m buying a car",
+          "description": "One or a few checks for myself, family or friends."
+        },
+        "IMPORTER": {
+          "title": "I import or export cars",
+          "description": "Regular checks on vehicles I bring into Ghana."
+        },
+        "BUSINESS": {
+          "title": "Garage, dealer or rental company",
+          "description": "Checks for my business, with staff who need access."
+        }
+      },
+      "soonChip": "December",
+      "personalTitle": "You’ll start as a Registered buyer",
+      "personalNote": "Past reports saved to your account, PDF re-downloads and share links with a public verification page.",
+      "businessTitle": "Business accounts launch in December",
+      "businessNote": "{level} accounts arrive with Phase 1B. We’ll save your interest and set you up as a Registered buyer today — your reports and details carry over automatically.",
+      "continue": "Continue",
+      "saving": "Saving…",
+      "error": "We could not save that. Try again."
+    },
+    "profile": {
+      "title": "What should we call you?",
+      "lede": "Reports and receipts carry this name, so use the one you want on paper.",
+      "submit": "Finish setup",
+      "submitting": "Finishing…"
+    },
+    "done": {
+      "title": "You’re all set, {name}!",
+      "lede": "Your account is ready. Here’s what you can do now:",
+      "interestChip": "{level} interest saved",
+      "businessSaved": "We’ve noted your interest in {level} accounts. We’ll reach out on this contact when they launch in December — no action needed from you.",
+      "checkCta": "Check a car",
+      "accountCta": "Go to your account"
+    },
+    "journey": {
+      "title": "Your account, station by station",
+      "trackLabel": "Setup stations",
+      "doneLabel": "Ready",
+      "stateDone": "Stamped",
+      "stateActive": "Now open",
+      "stateTodo": "Next up",
+      "edit": "Edit",
+      "verified": "Contact verified",
+      "verifiedTitle": "Already verified",
+      "verifiedNote": "You’re signed in as {contact}. Pick up exactly where you left off.",
+      "continue": "Continue",
+      "visitDone": "Revisit {label}",
+      "visitActive": "{label}, current step",
+      "visitTodo": "{label}, locked until the previous step is done",
+      "hints": {
+        "intent": "Choose the class that matches how you buy cars.",
+        "profile": "The name your reports and receipts will carry.",
+        "done": "Saved reports, PDF re-downloads and share links."
+      }
+    }
   }
 }

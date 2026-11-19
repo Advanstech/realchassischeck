@@ -3,6 +3,12 @@
 @import '../styles/design-tokens.css';
 
 /*
+ * Dark mode follows the data-theme attribute that ThemeProvider owns, so the
+ * tokens and any dark: utility always agree, whatever the OS is doing.
+ */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/*
  * Role tokens become Tailwind utilities here and nowhere else. Components write
  * bg-surface / text-text-muted / bg-cta, never a hex value and never a raw palette
  * colour for a role (Design Specification, colour rules).
@@ -26,12 +32,25 @@
   --color-on-cta: var(--on-cta);
   --color-link: var(--link);
   --color-header: var(--header-bg);
+  --color-paper: var(--paper);
+  --color-hairline: var(--hairline);
+  --color-hairline-strong: var(--hairline-strong);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-surface-inverse-raised: var(--surface-inverse-raised);
+  --color-on-inverse: var(--on-inverse);
+  --color-on-inverse-muted: var(--on-inverse-muted);
 }
 
 @layer base {
   html {
     -webkit-text-size-adjust: 100%;
     scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 
   body {
@@ -55,5 +74,163 @@
   select,
   textarea {
     min-height: 44px;
+  }
+
+  ::selection {
+    background-color: var(--color-red-100);
+    color: var(--color-navy-900);
+  }
+
+  /* Scrollbars in the brand's own language, not the browser default. */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-strong) transparent;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-strong);
+    border: 3px solid var(--bg);
+    border-radius: var(--radius-md);
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--brand);
+  }
+}
+
+/*
+ * Programmatic focus landmarks (wizard panels) are not controls: the brand
+ * focus ring stays on buttons, links and fields only. Unlayered so it outranks
+ * the token sheet's :focus-visible rule.
+ */
+[tabindex='-1']:focus-visible {
+  outline: none;
+}
+
+/*
+ * Surface recipes. These are the only place a gradient or texture is declared;
+ * pages compose them through class names, so a redesign happens in one file.
+ */
+@layer components {
+  /* Sticky header gains elevation once the page moves, so the pin reads clearly. */
+  .site-header {
+    transition: box-shadow var(--duration-base) var(--ease-standard);
+  }
+
+  .site-header[data-scrolled='true'] {
+    box-shadow: var(--shadow-e2);
+  }
+
+  .hero-canvas {
+    background-color: var(--surface-inverse);
+    background-image: var(--gradient-hero);
+  }
+
+  /* Faint 44px instrument grid, masked so it fades out before the fold. */
+  .hero-grid::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(120% 80% at 50% 0%, #000 0%, transparent 78%);
+    pointer-events: none;
+  }
+
+  /* A soft aperture of light behind a floating object. */
+  .aperture {
+    background: radial-gradient(closest-side, var(--aperture), transparent 72%);
+    filter: blur(6px);
+  }
+
+  .closing-car-image {
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 34%, #000 100%);
+  }
+
+  .route-enter {
+    animation: route-enter var(--duration-base) var(--ease-standard) both;
+  }
+
+  @keyframes route-enter {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  .rail-canvas {
+    background-color: var(--surface-inverse);
+    background-image: var(--gradient-rail);
+  }
+
+  .hairline-x {
+    height: 1px;
+    background-image: var(--gradient-hairline);
+  }
+
+  /* Hairline card: border instead of shadow, per the 3G budget. */
+  .panel {
+    background-color: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+  }
+
+  .panel-raised {
+    background-color: var(--surface);
+    border: 1px solid var(--hairline);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-e1);
+  }
+
+  .sheen {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sheen::after {
+    content: '';
+    position: absolute;
+    inset-block: -40%;
+    inset-inline-start: 0;
+    width: 45%;
+    background-image: var(--gradient-sheen);
+    animation: var(--animate-sheen);
+    pointer-events: none;
+  }
+
+  .num {
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  /* Scroll-driven scenes turn off entirely for reduced motion. */
+  @media (prefers-reduced-motion: reduce) {
+    .closing-car-parallax,
+    .account-watermark {
+      transform: none !important;
+    }
+
+    .route-enter {
+      animation: none;
+    }
+
+    .sheen::after {
+      animation: none;
+      opacity: 0;
+    }
   }
 }

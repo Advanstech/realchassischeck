@@ -33,7 +33,7 @@ function sessionId(): string {
   return created;
 }
 
-function requestError(response: Response, error: unknown): ApiRequestError {
+export function requestError(response: Response, error: unknown): ApiRequestError {
   if (typeof error === 'object' && error !== null && 'code' in error && 'message' in error) {
     return new ApiRequestError(response.status, error as ApiErrorBody);
   }

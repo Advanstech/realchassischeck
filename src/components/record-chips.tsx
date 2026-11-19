@@ -1,33 +1,35 @@
+'use client';
+
+import { useTranslations } from 'next-intl';
 import type { PreviewPayload } from '@/lib/api';
 
-const LABELS: ReadonlyArray<readonly [keyof PreviewPayload['counts'], string]> = [
-  ['accidents', 'Accident records'],
-  ['theft', 'Theft records'],
-  ['title_brands', 'Title brands'],
-  ['sales', 'Sale listings'],
-  ['recalls', 'Open recalls'],
-  ['service', 'Service records'],
-];
+const LABELS = ['accidents', 'theft', 'title_brands', 'sales', 'recalls', 'service'] as const;
 
 export function RecordChips({ counts }: { readonly counts: PreviewPayload['counts'] }) {
-  const records = LABELS.flatMap(([key, label]) => {
+  const t = useTranslations('preview');
+  const records = LABELS.flatMap((key) => {
     const count = counts[key];
-    return count ? [{ key, label, count }] : [];
+    return count ? [{ key, count }] : [];
   });
   if (records.length === 0) return null;
+
   return (
     <section aria-labelledby="record-counts-title">
-      <h2 id="record-counts-title" className="text-h3 font-semibold text-brand">
-        Records found
-      </h2>
-      <p className="mt-1 text-small text-text-muted">Counts only. Dates and record details are inside the paid report.</p>
-      <ul className="mt-3 flex flex-wrap gap-2">
+      <div className="flex flex-wrap items-end justify-between gap-2">
+        <h2 id="record-counts-title" className="text-h3 font-bold text-brand">
+          {t('recordsTitle')}
+        </h2>
+        <p className="text-caption text-text-subtle">{t('detailsUnlock')}</p>
+      </div>
+      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
         {records.map((record) => (
-          <li key={record.key} className="rounded-full bg-info-bg px-3 py-2 text-small font-medium text-info-ink">
-            {record.count} {record.label.toLowerCase()}
+          <li key={record.key} className="rounded-lg border border-hairline bg-bg-subtle p-4">
+            <p className="num text-h1 font-extrabold leading-none text-brand">{record.count}</p>
+            <p className="mt-2 text-small font-medium text-text-muted">{t(`counts.${record.key}`)}</p>
           </li>
         ))}
       </ul>
+      <p className="mt-3 text-caption text-text-subtle">{t('recordsNote')}</p>
     </section>
   );
 }

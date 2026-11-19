@@ -113,6 +113,7 @@
   --on-brand: #ffffff;
   --cta: var(--color-red-500);
   --cta-hover: var(--color-red-600);
+  --cta-ink: var(--color-red-700);
   --on-cta: #ffffff;
   --link: var(--color-navy-600);
   --focus-ring: var(--color-navy-300);
@@ -134,6 +135,7 @@
   --on-brand: #021f42;
   --cta: var(--color-red-500);
   --cta-hover: var(--color-red-400);
+  --cta-ink: var(--color-red-300);
   --on-cta: #ffffff;
   --link: #7fb0ff;
   --focus-ring: var(--color-navy-300);
@@ -176,4 +178,129 @@
   letter-spacing: 0.12em;
   font-variant-numeric: tabular-nums;
   text-transform: uppercase;
+}
+
+/* ---------------------------------------------------------------------------
+   Design v2 additions (web app copy only).
+   The brand kit above stays untouched as the source of truth: these tokens add
+   depth, surface and motion primitives for the buyer marketing pages and the
+   admin console. Every value is still a token; components never use raw hex.
+   --------------------------------------------------------------------------- */
+@theme {
+  /* Wider type range for editorial display headlines (still Inter only). */
+  --text-hero: clamp(2.5rem, 4.3vw, 4rem);
+  --text-hero--line-height: 1.04;
+  --text-hero--letter-spacing: -0.04em;
+  --text-display-xl: clamp(2.75rem, 1.85rem + 4.2vw, 4.5rem);
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.035em;
+  --text-display-lg: clamp(2.25rem, 1.6rem + 2.9vw, 3.5rem);
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.03em;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.2;
+  --text-eyebrow--letter-spacing: 0.14em;
+
+  /* Elevation beyond the three base levels: raised instrument panels and modals. */
+  --shadow-e4: 0 24px 64px -16px rgb(2 31 66 / 0.32), 0 2px 8px rgb(2 31 66 / 0.06);
+  --shadow-lift: 0 36px 90px -28px rgb(2 31 66 / 0.5);
+  --shadow-glow-red: 0 18px 44px -18px rgb(226 8 5 / 0.55);
+  --shadow-hairline: inset 0 1px 0 rgb(255 255 255 / 0.08);
+
+  /* Shape */
+  --radius-xs: 6px;
+  --radius-sheet: 28px;
+
+  /* Motion: weighted, precise, never longer than a breath. */
+  --ease-entrance: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --duration-enter: 560ms;
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-pulse-ring: pulse-ring 2.6s cubic-bezier(0.2, 0, 0, 1) infinite;
+  --animate-sheen: sheen 7s ease-in-out infinite;
+  --animate-float: float 9s ease-in-out infinite;
+}
+
+:root {
+  /* Inverse surfaces (hero, report band, admin rail) */
+  --surface-inverse: var(--color-navy-950);
+  --surface-inverse-raised: var(--color-navy-900);
+  --on-inverse: #ffffff;
+  --on-inverse-muted: #9fb0c8;
+
+  /* Hairlines: the primary separator on light surfaces, cheaper than shadows. */
+  --hairline: rgb(2 31 66 / 0.08);
+  --hairline-strong: rgb(2 31 66 / 0.14);
+  --hairline-inverse: rgb(255 255 255 / 0.12);
+
+  /* Paper: the warm-white canvas behind white cards. */
+  --paper: #fbfcfe;
+  /* Aperture glow used behind hero objects. */
+  --aperture: rgb(59 103 163 / 0.45);
+
+  /* Surface recipes: hero canvas, admin rail, moving light. */
+  --gradient-hero: radial-gradient(125% 95% at 16% -10%, #123c6f 0%, #08203d 42%, #050f20 100%);
+  --gradient-rail: linear-gradient(180deg, #081b35 0%, #050f20 100%);
+  --gradient-sheen: linear-gradient(90deg, transparent 0%, rgb(255 255 255 / 0.22) 50%, transparent 100%);
+  --gradient-hairline: linear-gradient(90deg, transparent, rgb(2 31 66 / 0.14), transparent);
+  --grid-line: rgb(255 255 255 / 0.045);
+}
+
+:root[data-theme='dark'],
+.dark {
+  --surface-inverse: #050f20;
+  --surface-inverse-raised: #0b1b33;
+  --hairline: rgb(255 255 255 / 0.1);
+  --hairline-strong: rgb(255 255 255 / 0.18);
+  --paper: #050f20;
+  --aperture: rgb(98 138 192 / 0.38);
+}
+
+@keyframes marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: scale(0.72);
+    opacity: 0.55;
+  }
+  70% {
+    transform: scale(1.06);
+    opacity: 0.12;
+  }
+  100% {
+    transform: scale(1.12);
+    opacity: 0;
+  }
+}
+
+@keyframes sheen {
+  0%,
+  100% {
+    transform: translate3d(-60%, 0, 0) rotate(8deg);
+    opacity: 0;
+  }
+  45% {
+    opacity: 0.5;
+  }
+  60% {
+    transform: translate3d(120%, 0, 0) rotate(8deg);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
 }

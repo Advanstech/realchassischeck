@@ -12,7 +12,11 @@ describe('lookup presentation helpers', () => {
     expect(formatMoney(135, 'GHS')).toBe('GH₵1.35');
   });
 
-  it('renders preview expiry in GMT', () => {
-    expect(formatPreviewExpiry('2026-11-19T12:00:00.000Z')).toContain('GMT');
+  it('renders preview expiry in GMT without locale-dependent formatting', () => {
+    // The preview page is SSR-ed and hydrated, so the exact string is the contract:
+    // any `Intl` drift between Node and the browser shows up as a hydration mismatch.
+    expect(formatPreviewExpiry('2026-11-19T12:00:00.000Z')).toBe('19 Nov 2026 at 12:00 PM GMT');
+    expect(formatPreviewExpiry('2026-11-20T18:18:00.000Z')).toBe('20 Nov 2026 at 6:18 PM GMT');
+    expect(formatPreviewExpiry('2027-01-01T00:05:00.000Z')).toBe('1 Jan 2027 at 12:05 AM GMT');
   });
 });

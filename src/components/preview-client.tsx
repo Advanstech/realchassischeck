@@ -1,12 +1,13 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { LoaderCircle } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import { useEffect } from 'react';
+import { Button } from '@/components/ui/button';
 import { trackEvent } from '@/lib/analytics';
 import { ApiRequestError, getPreview, type PreviewPayload } from '@/lib/api';
+import { PreviewSkeleton } from './preview-skeleton';
 import { PreviewView } from './preview-view';
-import { SiteHeader } from './site-header';
 
 interface PreviewClientProps {
   readonly publicId: string;
@@ -14,6 +15,7 @@ interface PreviewClientProps {
 }
 
 export function PreviewClient({ publicId, initialData }: PreviewClientProps) {
+  const t = useTranslations('preview');
   const preview = useQuery({
     queryKey: ['preview', publicId],
     queryFn: ({ signal }) => getPreview(publicId, signal),
@@ -24,30 +26,22 @@ export function PreviewClient({ publicId, initialData }: PreviewClientProps) {
     if (preview.data) trackEvent('preview_viewed', { status: preview.data.status });
   }, [preview.data]);
 
+  const expired = preview.error instanceof ApiRequestError && preview.error.body.code === 'SHARE_LINK_EXPIRED';
+
   return (
-    <div className="min-h-screen bg-bg-subtle">
-      <SiteHeader />
-      <main className="mx-auto max-w-[960px] px-4 py-6 sm:py-10">
+    <div className="min-h-screen bg-paper">
+      <main id="main" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 sm:py-10">
         {preview.isPending ? (
-          <div className="flex min-h-72 flex-col items-center justify-center gap-3 text-text-muted" role="status">
-            <LoaderCircle className="size-8 animate-spin" aria-hidden="true" />
-            <p>Opening your saved preview…</p>
-          </div>
+          <PreviewSkeleton />
         ) : preview.error ? (
-          <section className="rounded-lg border border-border bg-surface p-6 text-center">
-            <h1 className="text-h2 font-semibold text-brand">
-              {preview.error instanceof ApiRequestError && preview.error.body.code === 'SHARE_LINK_EXPIRED'
-                ? 'This preview link has expired'
-                : 'We could not open this preview'}
-            </h1>
-            <p className="mt-3 text-text-muted">
-              {preview.error instanceof ApiRequestError
-                ? preview.error.message
-                : 'Check your connection and try again.'}
+          <section className="panel mx-auto mt-10 max-w-[34rem] p-6 text-center">
+            <h1 className="text-h2 font-extrabold text-brand">{expired ? t('expiredTitle') : t('errorTitle')}</h1>
+            <p className="mt-3 text-small text-text-muted">
+              {preview.error instanceof ApiRequestError ? preview.error.message : t('errorBody')}
             </p>
-            <button type="button" className="mt-5 min-h-12 rounded-md bg-brand px-5 font-semibold text-on-brand" onClick={() => void preview.refetch()}>
-              Try again
-            </button>
+            <Button variant="secondary" className="mt-5" onClick={() => void preview.refetch()}>
+              {t('retry')}
+            </Button>
           </section>
         ) : preview.data ? (
           <PreviewView preview={preview.data} />

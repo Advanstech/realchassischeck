@@ -20,10 +20,18 @@ async function capture(page: Page, name: string) {
   await page.screenshot({ path: path.join(evidenceDirectory, `${name}-360.png`), fullPage: true });
 }
 
+test.beforeEach(async ({ page }, testInfo) => {
+  // Keep local rerun quotas isolated without disabling the production limiter.
+  const run = Date.now();
+  const testOctet = (testInfo.line % 200) + 1;
+  const runOctet = (Math.floor(run / 1000) % 200) + 1;
+  await page.context().setExtraHTTPHeaders({ 'x-forwarded-for': `10.${testOctet}.${runOctet}.${(run % 200) + 1}` });
+});
+
 async function runLookup(page: Page, identifier: string) {
   await page.goto('/');
   await page.getByLabel('VIN or chassis number').fill(identifier);
-  await page.getByRole('button', { name: 'Run a free check' }).click();
+  await page.getByRole('button', { name: 'Check free' }).click();
   await expect(page).toHaveURL(/\/preview\/RCC-/);
 }
 
@@ -31,11 +39,18 @@ test('AT-01 and AT-07: records preview, price, sources and public replay', async
   await runLookup(page, US_VIN);
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('We found records for this vehicle');
   await expect(page.getByRole('heading', { name: '2019 Mitsubishi Outlander' })).toBeVisible();
-  await expect(page.getByText('GH₵149.00', { exact: true })).toBeVisible();
+  await expect(page.getByText('GH₵149.00', { exact: true }).last()).toBeVisible();
+  await expect(page.getByText('Check easily confused characters: 0 and O, 1 and I, 5 and S, 8 and B.')).toBeVisible();
+  const confirmation = page.getByRole('checkbox', { name: 'This is the right vehicle' });
+  await expect(confirmation).not.toBeChecked();
   await expect(page.getByRole('button', { name: 'Continue to secure checkout' })).toBeDisabled();
   await expect(page.getByText('United States', { exact: true }).last()).toBeVisible();
   await expect(page.getByText('Japan', { exact: true }).last()).toBeVisible();
   await capture(page, 'preview-records');
+  await confirmation.check();
+  await expect(confirmation).toBeChecked();
+  // M2 still owns activation; confirmation can never bypass that milestone gate.
+  await expect(page.getByRole('button', { name: 'Continue to secure checkout' })).toBeDisabled();
 
   await page.reload();
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('We found records for this vehicle');
@@ -46,12 +61,12 @@ test('AT-02 and AT-03: invalid identifiers fail with accessible guidance', async
   await page.goto('/');
   const field = page.getByLabel('VIN or chassis number');
   await field.fill('1M8GDM9AXKP04278');
-  await page.getByRole('button', { name: 'Run a free check' }).click();
+  await page.getByRole('button', { name: 'Check free' }).click();
   await expect(page.locator('#identifier-error')).toContainText('17 characters');
   await expect(field).toHaveAttribute('aria-invalid', 'true');
 
   await field.fill('1M8GDM9A9KP042788');
-  await page.getByRole('button', { name: 'Run a free check' }).click();
+  await page.getByRole('button', { name: 'Check free' }).click();
   await expect(page.locator('#identifier-error')).toHaveText('This VIN looks mistyped. Please check each character.');
   await expect(page).toHaveURL('/');
   await capture(page, 'home-invalid');
@@ -89,7 +104,7 @@ test('AT-04: Japanese chassis lead capture is idempotent in the browser flow', a
 test('provider unavailable and error outcomes never offer checkout', async ({ page }) => {
   const response = await page.request.post('/api/v1/lookups', {
     data: { identifier: US_VIN, shippingFrom: 'usa' },
-    headers: { 'x-rcc-session': 'e2e_provider_outcomes' },
+    headers: { 'x-rcc-session': 'e2e_provider_outcomes', 'x-forwarded-for': '203.0.113.250' },
   });
   expect(response.status()).toBe(201);
   const preview = await response.json() as Record<string, unknown>;
@@ -106,7 +121,8 @@ test('provider unavailable and error outcomes never offer checkout', async ({ pa
     });
   });
 
-  await page.goto(`/preview/${String(preview.publicId)}`);
+  // A synthetic route skips the server prefetch so the browser can exercise both contracts.
+  await page.goto('/preview/synthetic-provider-outcome');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('The vehicle records source is unavailable');
   await expect(page.getByRole('button', { name: 'Continue to secure checkout' })).toHaveCount(0);
   await capture(page, 'preview-provider-unavailable');
@@ -116,4 +132,23 @@ test('provider unavailable and error outcomes never offer checkout', async ({ pa
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('We could not complete the free check');
   await expect(page.getByRole('button', { name: 'Continue to secure checkout' })).toHaveCount(0);
   await capture(page, 'preview-provider-error');
+});
+
+test('PRV-04 stops a lookup at eight seconds and retries successfully', async ({ page }) => {
+  await page.route('**/api/v1/lookups', async (route) => {
+    await new Promise((resolve) => setTimeout(resolve, 8_500));
+    await route.abort('timedout').catch(() => {});
+  });
+  await page.goto('/');
+  await page.getByLabel('VIN or chassis number').fill(US_VIN);
+  await page.getByRole('button', { name: 'Check free' }).click();
+  await expect(page.getByText('Vehicle decode', { exact: true })).toBeVisible();
+  await expect(page.getByText('This check took too long and was stopped. No payment was taken.')).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByRole('button', { name: 'Check free' })).toBeEnabled();
+  await capture(page, 'lookup-timeout');
+
+  await page.unroute('**/api/v1/lookups');
+  await page.getByRole('button', { name: 'Try again' }).click();
+  await expect(page).toHaveURL(/\/preview\/RCC-/);
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('We found records for this vehicle');
 });
