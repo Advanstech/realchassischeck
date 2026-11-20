@@ -21,7 +21,7 @@ export function RecordChips({ counts }: { readonly counts: PreviewPayload['count
         </h2>
         <p className="text-caption text-text-subtle">{t('detailsUnlock')}</p>
       </div>
-      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+      <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
         {records.map((record) => (
           <li key={record.key} className="rounded-lg border border-hairline bg-bg-subtle p-4">
             <p className="num text-h1 font-extrabold leading-none text-brand">{record.count}</p>

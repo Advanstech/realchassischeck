@@ -29,20 +29,22 @@ export function PreviewClient({ publicId, initialData }: PreviewClientProps) {
   const expired = preview.error instanceof ApiRequestError && preview.error.body.code === 'SHARE_LINK_EXPIRED';
 
   return (
-    <div className="min-h-screen bg-paper">
-      <main id="main" className="mx-auto max-w-[1200px] px-4 py-6 sm:px-6 sm:py-10">
+    <div className="min-h-screen">
+      <main id="main">
         {preview.isPending ? (
           <PreviewSkeleton />
         ) : preview.error ? (
-          <section className="panel mx-auto mt-10 max-w-[34rem] p-6 text-center">
-            <h1 className="text-h2 font-extrabold text-brand">{expired ? t('expiredTitle') : t('errorTitle')}</h1>
-            <p className="mt-3 text-small text-text-muted">
-              {preview.error instanceof ApiRequestError ? preview.error.message : t('errorBody')}
-            </p>
-            <Button variant="secondary" className="mt-5" onClick={() => void preview.refetch()}>
-              {t('retry')}
-            </Button>
-          </section>
+          <div className="mx-auto w-full max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
+            <section className="panel mx-auto mt-10 max-w-[34rem] p-6 text-center">
+              <h1 className="text-h2 font-extrabold text-brand">{expired ? t('expiredTitle') : t('errorTitle')}</h1>
+              <p className="mt-3 text-small text-text-muted">
+                {preview.error instanceof ApiRequestError ? preview.error.message : t('errorBody')}
+              </p>
+              <Button variant="secondary" className="mt-5" onClick={() => void preview.refetch()}>
+                {t('retry')}
+              </Button>
+            </section>
+          </div>
         ) : preview.data ? (
           <PreviewView preview={preview.data} />
         ) : null}

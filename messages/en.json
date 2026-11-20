@@ -256,7 +256,9 @@
   },
   "preview": {
     "back": "Check another vehicle",
+    "eyebrow": "Free vehicle preview",
     "youChecked": "You checked",
+    "detailsTitle": "Vehicle details",
     "recordsTitle": "Records found",
     "recordsNote": "Counts only. Dates and record details are inside the paid report.",
     "confirmHint": "Check easily confused characters: 0 and O, 1 and I, 5 and S, 8 and B.",
@@ -305,27 +307,33 @@
     "status": {
       "records_found": {
         "title": "We found records for this vehicle",
-        "body": "The free check found record counts. Review what the full report includes before you decide to buy."
+        "body": "The free check found record counts. Review what the full report includes before you decide to buy.",
+        "chip": "Records found"
       },
       "no_records": {
         "title": "No records found in the sources checked",
-        "body": "There is nothing to buy. This does not prove the vehicle has a clean history; use the free official tools below too."
+        "body": "There is nothing to buy. This does not prove the vehicle has a clean history; use the free official tools below too.",
+        "chip": "No records found"
       },
       "europe_referral": {
         "title": "This vehicle needs a European history source",
-        "body": "Our US check returned no records. We are confirming a European partner, so there is nothing to buy here yet."
+        "body": "Our US check returned no records. We are confirming a European partner, so there is nothing to buy here yet.",
+        "chip": "Partner pending"
       },
       "japan_not_covered": {
         "title": "Japanese chassis checks are not covered yet",
-        "body": "We accepted the chassis number, but we do not have a Japanese records source in this phase. You will not be charged."
+        "body": "We accepted the chassis number, but we do not have a Japanese records source in this phase. You will not be charged.",
+        "chip": "Not covered yet"
       },
       "provider_unavailable": {
         "title": "The vehicle records source is unavailable",
-        "body": "This source has been switched off. You cannot buy a report now, and no charge has been made."
+        "body": "This source has been switched off. You cannot buy a report now, and no charge has been made.",
+        "chip": "Source unavailable"
       },
       "provider_error": {
         "title": "We could not complete the free check",
-        "body": "The records provider did not respond after a retry. No charge has been made. Please try again shortly."
+        "body": "The records provider did not respond after a retry. No charge has been made. Please try again shortly.",
+        "chip": "Check failed"
       }
     },
     "includes": [

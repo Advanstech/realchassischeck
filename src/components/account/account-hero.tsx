@@ -35,7 +35,7 @@ export function AccountHero({ account }: { readonly account: AuthAccount }) {
           className="h-auto w-[24rem] max-w-none select-none sm:w-[32rem]"
         />
       </motion.div>
-      <div className="relative z-10 mx-auto flex w-full max-w-[1200px] flex-wrap items-end justify-between gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
+      <div className="relative z-10 mx-auto flex w-full max-w-[1400px] flex-wrap items-end justify-between gap-8 px-4 py-10 sm:px-6 sm:py-14 lg:px-8">
         <div>
           <Eyebrow tone="inverse">{t('title')}</Eyebrow>
           <h1 className="mt-4 text-h1 font-extrabold text-balance">

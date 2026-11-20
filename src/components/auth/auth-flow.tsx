@@ -30,7 +30,7 @@ export function AuthFlow({ mode, next }: { readonly mode: Mode; readonly next: s
   }
 
   return (
-    <section className="mx-auto grid max-w-[1200px] gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12 lg:px-8 lg:py-20">
+    <section className="mx-auto grid max-w-[1400px] gap-8 px-4 py-12 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-12 lg:px-8 lg:py-20">
       <div className="hero-canvas hero-grid relative isolate overflow-hidden rounded-sheet p-7 text-on-inverse sm:p-9">
         <Image
           src="/monogram-rcc.png"

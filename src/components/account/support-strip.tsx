@@ -10,7 +10,7 @@ export function SupportStrip() {
   const t = useTranslations('account');
 
   return (
-    <section className="mx-auto w-full max-w-[1200px] px-4 py-12 sm:px-6 lg:px-8">
+    <section className="mx-auto w-full max-w-[1400px] px-4 py-12 sm:px-6 lg:px-8">
       <div className="panel-raised flex flex-wrap items-center justify-between gap-6 p-6 sm:p-8">
         <div className="flex items-start gap-4">
           <span className="grid size-11 shrink-0 place-items-center rounded-full bg-info-bg text-info-ink">

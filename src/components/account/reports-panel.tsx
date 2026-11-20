@@ -24,36 +24,40 @@ export function ReportsPanel() {
       <h2 className="text-h3 font-bold text-brand">{t('title')}</h2>
       <p className="mt-2 max-w-[52ch] text-small text-text-muted">{t('lede')}</p>
 
-      <div className="mt-5 rounded-lg border border-dashed border-border-strong bg-bg-subtle p-6 sm:p-8">
-        <FileText className="size-10 text-text-subtle" aria-hidden="true" />
-        <h3 className="mt-4 text-h3 font-bold text-text">{t('emptyTitle')}</h3>
-        <p className="mt-2 max-w-[46ch] text-small text-text-muted">{t('emptyBody')}</p>
+      <div className="mt-5 grid gap-8 rounded-lg border border-dashed border-border-strong bg-bg-subtle p-6 sm:p-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:items-center">
+        <div>
+          <FileText className="size-10 text-text-subtle" aria-hidden="true" />
+          <h3 className="mt-4 text-h3 font-bold text-text">{t('emptyTitle')}</h3>
+          <p className="mt-2 max-w-[46ch] text-small text-text-muted">{t('emptyBody')}</p>
 
-        <p className="mt-6 text-caption font-semibold uppercase tracking-[0.08em] text-text-subtle">
-          {t('stepsTitle')}
-        </p>
-        <ol className="mt-3 flex flex-col gap-3">
-          {STEPS.map(({ key, icon: Icon }, index) => (
-            <li key={key} className="flex items-center gap-3 text-small text-text">
-              <span
-                className="num grid size-7 shrink-0 place-items-center rounded-full border border-border-strong bg-surface text-caption font-bold text-text-muted"
-                aria-hidden="true"
-              >
-                {index + 1}
-              </span>
-              <Icon className="size-4 shrink-0 text-text-subtle" aria-hidden="true" />
-              {t(`steps.${key}`)}
-            </li>
-          ))}
-        </ol>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <Link href="/#check" className={buttonClass('primary', 'md')}>
+              {t('checkCta')}
+            </Link>
+            <Link href="/#report" className={buttonClass('secondary', 'md')}>
+              {t('sampleCta')}
+            </Link>
+          </div>
+        </div>
 
-        <div className="mt-7 flex flex-wrap gap-3">
-          <Link href="/#check" className={buttonClass('primary', 'md')}>
-            {t('checkCta')}
-          </Link>
-          <Link href="/#report" className={buttonClass('secondary', 'md')}>
-            {t('sampleCta')}
-          </Link>
+        <div>
+          <p className="text-caption font-semibold uppercase tracking-[0.08em] text-text-subtle">
+            {t('stepsTitle')}
+          </p>
+          <ol className="mt-3 flex flex-col gap-3">
+            {STEPS.map(({ key, icon: Icon }, index) => (
+              <li key={key} className="flex items-center gap-3 text-small text-text">
+                <span
+                  className="num grid size-7 shrink-0 place-items-center rounded-full border border-border-strong bg-surface text-caption font-bold text-text-muted"
+                  aria-hidden="true"
+                >
+                  {index + 1}
+                </span>
+                <Icon className="size-4 shrink-0 text-text-subtle" aria-hidden="true" />
+                {t(`steps.${key}`)}
+              </li>
+            ))}
+          </ol>
         </div>
       </div>
     </section>

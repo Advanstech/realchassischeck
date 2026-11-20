@@ -8,7 +8,7 @@ export function CoverageList({ sources }: { readonly sources: PreviewPayload['co
   const t = useTranslations('preview');
 
   return (
-    <section aria-labelledby="coverage-title" className="panel p-5">
+    <section aria-labelledby="coverage-title" className="panel-raised p-5 sm:p-6">
       <h2 id="coverage-title" className="text-h3 font-bold text-brand">
         {t('coverageTitle')}
       </h2>
